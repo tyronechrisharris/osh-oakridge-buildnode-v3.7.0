@@ -1,0 +1,47 @@
+// tailscale-acl.hujson
+// Tailscale ACL configuration enforcing strict node-to-node microsegmentation
+// for the Federated Site-to-Site topology.
+{
+  // Groups define logical collections of users or nodes
+  "groups": {
+    "group:oscar-admins": ["admin@example.com"], // Replace with actual admin emails
+    "group:oscar-nodes":  ["oscar-site1", "oscar-site2"] // Replace with actual node Tailscale hostnames/tags
+  },
+
+  // Tags allow applying policies to machines rather than users
+  "tagOwners": {
+    "tag:oscar-node": ["group:oscar-admins"]
+  },
+
+  // Access Control Lists
+  "acls": [
+    // Allow admins full access to all nodes (optional, restrict as needed)
+    { "action": "accept", "src": ["group:oscar-admins"], "dst": ["*:*"] },
+
+    // Enforce microsegmentation: OSCAR nodes can only communicate with other OSCAR nodes
+    // on specifically required ports (e.g., HTTPS 443, and potentially specific API ports like 8282 if needed directly over Tailscale).
+    // In this example, nodes can only talk to each other over HTTPS (443).
+    {
+      "action": "accept",
+      "src": ["tag:oscar-node"],
+      "dst": ["tag:oscar-node:443"]
+    },
+
+    // Explicitly deny everything else
+    // (Tailscale denies by default, but this makes it explicit for auditing)
+  ],
+
+  // Tests to verify the ACL behaves as expected
+  "tests": [
+    {
+      "src": "group:oscar-admins",
+      "accept": ["tag:oscar-node:22", "tag:oscar-node:443"],
+      "deny": []
+    },
+    {
+      "src": "tag:oscar-node",
+      "accept": ["tag:oscar-node:443"],
+      "deny": ["tag:oscar-node:22", "*:80"] // Nodes cannot SSH into each other or use unencrypted HTTP
+    }
+  ]
+}
