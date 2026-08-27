@@ -185,7 +185,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
         addComponent(buttonBar);        
         
         // add data source button
-        Button addDatasrcBtn = new Button("Datasource", ADD_ICON);
+        Button addDatasrcBtn = new Button(TranslationUtils.trans("datasource", "Datasource"), ADD_ICON);
         addDatasrcBtn.addStyleName(STYLE_SMALL);
         buttonBar.addComponent(addDatasrcBtn);        
         addDatasrcBtn.addClickListener(new ClickListener() {
@@ -210,7 +210,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
         });
         
         // add process button
-        Button addProcessBtn = new Button("Process", ADD_ICON);
+        Button addProcessBtn = new Button(TranslationUtils.trans("process", "Process"), ADD_ICON);
         addProcessBtn.addStyleName(STYLE_SMALL);
         buttonBar.addComponent(addProcessBtn);
         addProcessBtn.addClickListener(new ClickListener() {
