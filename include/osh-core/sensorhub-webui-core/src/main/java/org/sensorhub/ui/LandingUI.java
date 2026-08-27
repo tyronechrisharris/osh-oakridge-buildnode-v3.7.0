@@ -1,5 +1,7 @@
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -192,7 +194,7 @@ public class LandingUI extends UI{
      * @return button or label
      */
     private Component buildEndpointComponent(String endpoint) {
-        Button button = new Button("VIEW");
+        Button button = new Button(TranslationUtils.trans("view", "VIEW"));
         button.addStyleNames(ValoTheme.BUTTON_LARGE, ValoTheme.BUTTON_ICON_ALIGN_RIGHT);
 
         String title = "No accessible endpoint";
@@ -264,7 +266,7 @@ public class LandingUI extends UI{
      */
     private Component createLogoutButton(){
         // logout button
-        Button logoutButton = new Button("Logout");
+        Button logoutButton = new Button(TranslationUtils.trans("logout", "Logout"));
         logoutButton.setDescription("Logout from OSH node");
         logoutButton.setIcon(FontAwesome.SIGN_OUT);
         logoutButton.addStyleName(ValoTheme.BUTTON_LARGE);
@@ -275,7 +277,7 @@ public class LandingUI extends UI{
             @Override
             public void buttonClick(Button.ClickEvent event)
             {
-                final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to logout?");
+                final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.trans("are_you_sure_you_want_to_logout_", "Are you sure you want to logout?"));
                 popup.addCloseListener(new Window.CloseListener() {
                     @Override
                     public void windowClose(Window.CloseEvent e)

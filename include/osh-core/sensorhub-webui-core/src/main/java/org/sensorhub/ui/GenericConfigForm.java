@@ -157,8 +157,8 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         setMargin(false);
         
         // header
-        setCaption(title);
-        setDescription(popupText);
+        setCaption(title != null ? TranslationUtils.trans("prop_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), title) : null);
+        setDescription(TranslationUtils.trans("desc_" + (popupText != null ? popupText.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase() : ""), popupText));
         
         // form layout
         FormLayout form = new FormLayout();
@@ -209,7 +209,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
                         field = buildAndBindField(label, (String)propId, prop);
                         if (field == null)
                             continue;
-                        ((AbstractField<?>)field).setDescription(desc);
+                        ((AbstractField<?>)field).setDescription(desc != null ? TranslationUtils.trans("desc_" + desc.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), desc) : null);
                     }
                     catch (SourceException e)
                     {
@@ -263,7 +263,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
             for (Component subForm: subForms)
             {
                 Label sectionLabel = new Label(subForm.getCaption());
-                sectionLabel.setDescription(subForm.getDescription());
+                sectionLabel.setDescription(TranslationUtils.trans("desc_" + (subForm.getDescription() != null ? subForm.getDescription().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase() : ""), subForm.getDescription()));
                 sectionLabel.addStyleName(STYLE_H3);
                 sectionLabel.addStyleName(STYLE_COLORED);
                 addComponent(sectionLabel);
@@ -441,7 +441,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
 
                 // select system button
                 Button selectBtn = new Button(FontAwesome.SEARCH);
-                selectBtn.setDescription("Lookup System");
+                selectBtn.setDescription(TranslationUtils.trans("desc_" + "_lookup_system_", "Lookup System"));
                 selectBtn.addStyleName(STYLE_QUIET);
                 layout.addComponent(selectBtn);
                 layout.setComponentAlignment(selectBtn, Alignment.MIDDLE_LEFT);
@@ -484,7 +484,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
                 
                 // select module button
                 Button selectBtn = new Button(FontAwesome.SEARCH);
-                selectBtn.setDescription("Lookup Module");
+                selectBtn.setDescription(TranslationUtils.trans("desc_" + "_lookup_module_", "Lookup Module"));
                 selectBtn.addStyleName(STYLE_QUIET);
                 layout.addComponent(selectBtn);
                 layout.setComponentAlignment(selectBtn, Alignment.MIDDLE_LEFT);
@@ -529,7 +529,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
                 
                 // select module button
                 Button selectBtn = new Button(FontAwesome.SEARCH);
-                selectBtn.setDescription("Lookup Address");
+                selectBtn.setDescription(TranslationUtils.trans("desc_" + "_lookup_address_", "Lookup Address"));
                 selectBtn.addStyleName(STYLE_QUIET);
                 layout.addComponent(selectBtn);
                 layout.setComponentAlignment(selectBtn, Alignment.MIDDLE_LEFT);
@@ -599,7 +599,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
                 // show/hide button
                 final Button showBtn = new Button(FontAwesome.EYE);
                 showBtn.addStyleName(STYLE_QUIET);
-                showBtn.setDescription("Show Password");
+                showBtn.setDescription(TranslationUtils.trans("desc_" + "_show_password_", "Show Password"));
                 showBtn.setData(false);
                 layout.addComponent(showBtn);
                 layout.setComponentAlignment(showBtn, Alignment.MIDDLE_LEFT);
@@ -673,9 +673,9 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         chgButton.addStyleName(STYLE_SECTION_BUTTONS);
         chgButton.setIcon(EDIT_ICON);
         if (prop.getValue() == null)
-            chgButton.setCaption("Add");
+            chgButton.setCaption(TranslationUtils.trans("prop_" + "_add_", "Add"));
         else
-            chgButton.setCaption("Modify");
+            chgButton.setCaption(TranslationUtils.trans("prop_" + "_modify_", "Modify"));
         
         chgButton.addClickListener(new ClickListener() {
             @Override
@@ -725,9 +725,9 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         chgButton.addStyleName(STYLE_SECTION_BUTTONS);
         chgButton.setIcon(EDIT_ICON);
         if (prop.getValue() == null)
-            chgButton.setCaption("Add");
+            chgButton.setCaption(TranslationUtils.trans("prop_" + "_add_", "Add"));
         else
-            chgButton.setCaption("Modify");
+            chgButton.setCaption(TranslationUtils.trans("prop_" + "_modify_", "Modify"));
                 
         // show popup to select among available module types
         final ObjectTypeSelectionWithClearCallback callback = new ObjectTypeSelectionWithClearCallback() {
@@ -762,7 +762,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
                 // don't display remove button if value is required
                 if (prop.isRequired())
                     return;
-                chgButton.setCaption("Remove");
+                chgButton.setCaption(TranslationUtils.trans("prop_" + "_remove_", "Remove"));
             }   
             
             chgButton.addClickListener(new ClickListener() {
@@ -880,7 +880,7 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         listBox.setImmediate(true);
         listBox.setBuffered(true);
         listBox.setNullSelectionAllowed(false);
-        listBox.setDescription(prop.getDescription());
+        listBox.setDescription(prop.getDescription() != null ? TranslationUtils.trans("desc_" + prop.getDescription().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), prop.getDescription()) : null);
         //listBox.setWidth(250, Unit.PIXELS);
         listBox.addStyleName(UIConstants.STYLE_SMALL);
         listBox.setRows(Math.max(2, Math.min(5, container.size())));
@@ -1093,8 +1093,8 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         String title = prop.getLabel();
         if (title == null)
             title = DisplayUtils.getPrettyName((String)propId);
-        wrapper.setCaption(title);
-        wrapper.setDescription(prop.getDescription());
+        wrapper.setCaption(title != null ? TranslationUtils.trans("prop_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), title) : null);
+        wrapper.setDescription(prop.getDescription() != null ? TranslationUtils.trans("desc_" + prop.getDescription().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), prop.getDescription()) : null);
         
         return wrapper;
     }
@@ -1110,8 +1110,8 @@ public class GenericConfigForm extends VerticalLayout implements IModuleConfigFo
         String title = prop.getLabel();
         if (title == null)
             title = DisplayUtils.getPrettyName((String)propId);
-        layout.setCaption(title);
-        layout.setDescription(prop.getDescription());
+        layout.setCaption(title != null ? TranslationUtils.trans("prop_" + title.replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), title) : null);
+        layout.setDescription(prop.getDescription() != null ? TranslationUtils.trans("desc_" + prop.getDescription().replaceAll("[^a-zA-Z0-9]", "_").toLowerCase(), prop.getDescription()) : null);
         
         // create one tab per item in container
         final MyBeanItemContainer<Object> container = prop.getValue();

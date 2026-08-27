@@ -14,6 +14,8 @@ Copyright (C) 2012-2019 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -220,7 +222,7 @@ public class DatabaseStreamPanel extends VerticalLayout
         });
         
         // refresh button
-        Button refreshButton = new Button("Refresh");
+        Button refreshButton = new Button(TranslationUtils.trans("refresh", "Refresh"));
         refreshButton.setDescription("Reload data from database");
         refreshButton.setIcon(UIConstants.REFRESH_ICON);
         refreshButton.addStyleName(UIConstants.STYLE_SMALL);

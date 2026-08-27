@@ -14,6 +14,8 @@ Copyright (C) 2012-2017 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -104,7 +106,7 @@ public class DownloadModulesPopup extends Window
         ProgressBar pb = new ProgressBar();
         pb.setIndeterminate(true);
         loading.addComponent(pb);
-        loading.addComponent(new Label("Loading Package Information..."));
+        loading.addComponent(new Label(TranslationUtils.trans("loading_package_information___", "Loading Package Information...")));
         layout.addComponent(loading);
         
         setContent(layout);

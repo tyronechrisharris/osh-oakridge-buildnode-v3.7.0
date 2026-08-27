@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import net.opengis.sensorml.v20.AbstractProcess;
 import net.opengis.sensorml.v20.AggregateProcess;
 import net.opengis.sensorml.v20.Link;
@@ -85,7 +87,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
             addComponent(new Spacing());
             HorizontalLayout titleBar = new HorizontalLayout();
             titleBar.setSpacing(true);
-            Label sectionLabel = new Label("Process Inputs");
+            Label sectionLabel = new Label(TranslationUtils.trans("process_inputs", "Process Inputs"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             titleBar.addComponent(sectionLabel);
@@ -104,7 +106,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
             addComponent(new Spacing());
             HorizontalLayout titleBar = new HorizontalLayout();
             titleBar.setSpacing(true);
-            Label sectionLabel = new Label("Process Parameters");
+            Label sectionLabel = new Label(TranslationUtils.trans("process_parameters", "Process Parameters"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             titleBar.addComponent(sectionLabel);
@@ -183,7 +185,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
         addComponent(buttonBar);        
         
         // add data source button
-        Button addDatasrcBtn = new Button("Datasource", ADD_ICON);
+        Button addDatasrcBtn = new Button(TranslationUtils.trans("datasource", "Datasource"), ADD_ICON);
         addDatasrcBtn.addStyleName(STYLE_SMALL);
         buttonBar.addComponent(addDatasrcBtn);        
         addDatasrcBtn.addClickListener(new ClickListener() {
@@ -208,7 +210,7 @@ public class ProcessAdminPanel extends DataSourceAdminPanel<IProcessModule<?>>
         });
         
         // add process button
-        Button addProcessBtn = new Button("Process", ADD_ICON);
+        Button addProcessBtn = new Button(TranslationUtils.trans("process", "Process"), ADD_ICON);
         addProcessBtn.addStyleName(STYLE_SMALL);
         buttonBar.addComponent(addProcessBtn);
         addProcessBtn.addClickListener(new ClickListener() {

@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.sensorhub.api.database.IObsSystemDatabase;
@@ -96,7 +98,7 @@ public class DatabaseAdminPanel extends DefaultModulePanel<IObsSystemDatabaseMod
             //layout.addComponent(new Label(""));
             HorizontalLayout titleBar = new HorizontalLayout();
             titleBar.setSpacing(true);
-            Label sectionLabel = new Label("Database Content");
+            Label sectionLabel = new Label(TranslationUtils.trans("database_content", "Database Content"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             titleBar.addComponent(sectionLabel);

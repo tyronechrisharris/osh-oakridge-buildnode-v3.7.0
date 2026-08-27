@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.sensorhub.api.common.SensorHubException;
@@ -71,7 +73,7 @@ public class ModuleInstanceSelectionPopup extends Window
         layout.addComponent(table);
         
         // add OK button
-        Button okButton = new Button("OK");
+        Button okButton = new Button(TranslationUtils.trans("ok", "OK"));
         okButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 

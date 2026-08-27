@@ -40,6 +40,9 @@ public class AdminUIConfig extends ModuleConfig
 
     @DisplayInfo(label="Enable Landing Page", desc="Enable Landing Servlet to redirect users to landing page")
     public boolean enableLandingPage;
+
+    @DisplayInfo(desc="The default language for the admin panel and other web applications", label="Default Language")
+    public String defaultLanguage = "en";
     
 
     public AdminUIConfig()

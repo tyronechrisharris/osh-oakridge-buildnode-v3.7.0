@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import org.sensorhub.api.command.IStreamingControlInterface;
 import org.sensorhub.api.module.ModuleConfig;
 import org.sensorhub.api.sensor.ISensorModule;
@@ -58,7 +60,7 @@ public class SensorAdminPanel extends DataSourceAdminPanel<ISensorModule<?>>
                 addComponent(new Spacing());
                 HorizontalLayout titleBar = new HorizontalLayout();
                 titleBar.setSpacing(true);
-                Label sectionLabel = new Label("Command Inputs");
+                Label sectionLabel = new Label(TranslationUtils.trans("command_inputs", "Command Inputs"));
                 sectionLabel.addStyleName(STYLE_H3);
                 sectionLabel.addStyleName(STYLE_COLORED);
                 titleBar.addComponent(sectionLabel);

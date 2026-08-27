@@ -1,5 +1,7 @@
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
@@ -74,12 +76,12 @@ public class ReadmePanel extends VerticalLayout {
             // Otherwise, display instructions for adding a readme file
             var header = new HorizontalLayout();
             header.setSpacing(true);
-            Label title = new Label("No README");
+            Label title = new Label(TranslationUtils.trans("no_readme", "No README"));
             title.addStyleName(UIConstants.STYLE_H2);
             header.addComponent(title);
             addComponent(header);
 
-            Button detailsBtn = new Button("Detailed Instructions");
+            Button detailsBtn = new Button(TranslationUtils.trans("detailed_instructions", "Detailed Instructions"));
             detailsBtn.setIcon(FontAwesome.CARET_RIGHT);
             //detailsBtn.setWidth(100.0f, Unit.PERCENTAGE);
 

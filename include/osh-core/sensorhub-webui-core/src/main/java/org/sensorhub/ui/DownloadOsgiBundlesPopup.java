@@ -14,6 +14,8 @@ Copyright (C) 2012-2021 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutorService;
@@ -71,7 +73,7 @@ public class DownloadOsgiBundlesPopup extends Window
         ProgressBar pb = new ProgressBar();
         pb.setIndeterminate(true);
         loading.addComponent(pb);
-        loading.addComponent(new Label("Loading Bundles Information..."));
+        loading.addComponent(new Label(TranslationUtils.trans("loading_bundles_information___", "Loading Bundles Information...")));
         layout.addComponent(loading);
         
         // buttons bar
@@ -81,11 +83,11 @@ public class DownloadOsgiBundlesPopup extends Window
         layout.setComponentAlignment(buttons, Alignment.MIDDLE_CENTER);
         
         // OK button
-        Button installBtn = new Button("Install Selected");
+        Button installBtn = new Button(TranslationUtils.trans("install_selected", "Install Selected"));
         installBtn.addStyleName(UIConstants.STYLE_SMALL);
         buttons.addComponent(installBtn);
         
-        Button cancelBtn = new Button("Cancel");
+        Button cancelBtn = new Button(TranslationUtils.trans("cancel", "Cancel"));
         cancelBtn.addStyleName(UIConstants.STYLE_SMALL);
         cancelBtn.addClickListener(event -> DownloadOsgiBundlesPopup.this.close());
         buttons.addComponent(cancelBtn);
