@@ -1,5 +1,7 @@
 package org.sensorhub.ui.table;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import org.sensorhub.ui.api.UIConstants;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Alignment;
@@ -17,12 +19,12 @@ import com.vaadin.v7.ui.TextField;
 public class PagedTableControls extends HorizontalLayout {
 
     private ComboBox itemsPerPageSelect = new ComboBox();
-    private Label itemsPerPageLabel = new Label("Items per page:");
-    //private Label pageLabel = new Label("Page:&nbsp;", ContentMode.HTML);
-    private Button btnFirst = new Button("<<");
-    private Button btnPrevious = new Button("<");
-    private Button btnNext = new Button(">");
-    private Button btnLast = new Button(">>");
+    private Label itemsPerPageLabel = new Label(TranslationUtils.trans("items_per_page_", "Items per page:"));
+    //private Label pageLabel = new Label(TranslationUtils.trans("page__nbsp_", "Page:&nbsp;"), ContentMode.HTML);
+    private Button btnFirst = new Button(TranslationUtils.trans("first_page", "<<"));
+    private Button btnPrevious = new Button(TranslationUtils.trans("prev_page", "<"));
+    private Button btnNext = new Button(TranslationUtils.trans("next_page", ">"));
+    private Button btnLast = new Button(TranslationUtils.trans("last_page", ">>"));
     private TextField currentPageTextField = new TextField();
 
     @SuppressWarnings("deprecation")

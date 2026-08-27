@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -78,7 +80,7 @@ public class DataSourceAdminPanel<ModuleType extends IDataProducerModule<?>> ext
         // sensor info panel
         if (module.isInitialized())
         {
-            Label sectionLabel = new Label("Data Source Info");
+            Label sectionLabel = new Label(TranslationUtils.trans("data_source_info", "Data Source Info"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             addComponent(sectionLabel);
@@ -88,7 +90,7 @@ public class DataSourceAdminPanel<ModuleType extends IDataProducerModule<?>> ext
             var fois = module.getCurrentFeaturesOfInterest().keySet();
             if (fois != null && !fois.isEmpty())
             {
-                addComponent(new Label("<b>FOI IDs:</b>", ContentMode.HTML)); 
+                addComponent(new Label(TranslationUtils.trans("_b_foi_ids___b_", "<b>FOI IDs:</b>"), ContentMode.HTML));
                 ListSelect list = new ListSelect();
                 list.setRows(4);
                 list.setNullSelectionAllowed(false);
@@ -104,7 +106,7 @@ public class DataSourceAdminPanel<ModuleType extends IDataProducerModule<?>> ext
                 addComponent(new Spacing());
                 HorizontalLayout titleBar = new HorizontalLayout();
                 titleBar.setSpacing(true);
-                sectionLabel = new Label("Outputs");
+                sectionLabel = new Label(TranslationUtils.trans("outputs", "Outputs"));
                 sectionLabel.addStyleName(STYLE_H3);
                 sectionLabel.addStyleName(STYLE_COLORED);
                 titleBar.addComponent(sectionLabel);
@@ -112,7 +114,7 @@ public class DataSourceAdminPanel<ModuleType extends IDataProducerModule<?>> ext
                 
                 // refresh button
                 final Timer timer = new Timer();
-                final Button refreshButton = new Button("Refresh");
+                final Button refreshButton = new Button(TranslationUtils.trans("refresh", "Refresh"));
                 refreshButton.setDescription("Toggle auto-refresh data once per second");
                 refreshButton.setIcon(REFRESH_ICON);
                 refreshButton.addStyleName(STYLE_SMALL);

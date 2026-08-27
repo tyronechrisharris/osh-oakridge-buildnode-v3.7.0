@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -123,7 +125,7 @@ public class ModuleTypeSelectionPopup extends Window implements UIConstants
         var osgiCtx = ((AdminUI)UI.getCurrent()).getParentHub().getOsgiContext();
         if (osgiCtx != null)
         {
-            Button installNew = new Button("Install More Modules...");
+            Button installNew = new Button(TranslationUtils.trans("install_more_modules___", "Install More Modules..."));
             installNew.setStyleName(STYLE_LINK);
             installNew.addStyleName(UIConstants.STYLE_SMALL);
             layout.addComponent(installNew);
@@ -151,7 +153,7 @@ public class ModuleTypeSelectionPopup extends Window implements UIConstants
         
         // OK button
         final ModuleRegistry registry = ((AdminUI)UI.getCurrent()).getParentHub().getModuleRegistry();
-        Button okButton = new Button("OK");
+        Button okButton = new Button(TranslationUtils.trans("ok", "OK"));
         okButton.addStyleName(UIConstants.STYLE_SMALL);
         okButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -196,7 +198,7 @@ public class ModuleTypeSelectionPopup extends Window implements UIConstants
         if (callback instanceof ModuleTypeSelectionWithClearCallback)
         {
             // add clear button
-            Button clearButton = new Button("Select None");
+            Button clearButton = new Button(TranslationUtils.trans("select_none", "Select None"));
             clearButton.addStyleName(UIConstants.STYLE_SMALL);
             clearButton.addClickListener(new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;

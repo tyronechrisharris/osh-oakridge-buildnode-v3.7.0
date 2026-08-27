@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,7 +115,7 @@ public class ProcessSelectionPopup extends Window implements UIConstants
         layout.addComponent(table);
         
         // link to more modules
-        Button installNew = new Button("Install More Packages...");
+        Button installNew = new Button(TranslationUtils.trans("install_more_packages___", "Install More Packages..."));
         installNew.setStyleName(STYLE_LINK);
         layout.addComponent(installNew);
         layout.setComponentAlignment(installNew, Alignment.MIDDLE_RIGHT);
@@ -134,12 +136,12 @@ public class ProcessSelectionPopup extends Window implements UIConstants
         layout.setComponentAlignment(buttons, Alignment.MIDDLE_LEFT);
         
         // name text box
-        buttons.addComponent(new Label("Process Name:"));
+        buttons.addComponent(new Label(TranslationUtils.trans("process_name_", "Process Name:")));
         final TextField textBox = new TextField();
         buttons.addComponent(textBox);
         
         // OK button
-        Button okButton = new Button("OK");
+        Button okButton = new Button(TranslationUtils.trans("ok", "OK"));
         okButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event)

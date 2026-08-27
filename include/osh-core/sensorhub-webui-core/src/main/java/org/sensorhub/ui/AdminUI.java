@@ -184,6 +184,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
             String configLanguage = ((AdminUIConfig) adminModule.getConfiguration()).defaultLanguage;
             if (configLanguage != null && !configLanguage.isEmpty()) {
                 currentLocale = new Locale(configLanguage);
+                VaadinSession.getCurrent().setAttribute("language", currentLocale);
             }
             if (VaadinSession.getCurrent().getAttribute("language") != null) {
                 currentLocale = (Locale) VaadinSession.getCurrent().getAttribute("language");
@@ -195,16 +196,16 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         }
 
         // log request
-        ADD_MODULE_ACTION = new Action(trans("add_module", "Add New Module"), new ThemeResource("icons/module_add.png"));
-        ADD_SUBMODULE_ACTION = new Action(trans("add_submodule", "Add Submodule"), new ThemeResource("icons/module_add.png"));
-        REMOVE_MODULE_ACTION = new Action(trans("remove_module", "Remove Module"), new ThemeResource("icons/module_delete.png"));
-        REMOVE_SUBMODULE_ACTION = new Action(trans("remove_submodule", "Remove Submodule"), new ThemeResource("icons/module_delete.png"));
-        START_MODULE_ACTION = new Action(trans("start", "Start"), new ThemeResource("icons/enable.png"));
-        STOP_MODULE_ACTION = new Action(trans("stop", "Stop"), new ThemeResource("icons/disable.gif"));
-        RESTART_MODULE_ACTION = new Action(trans("restart", "Restart"), new ThemeResource("icons/refresh.gif"));
-        REINIT_MODULE_ACTION = new Action(trans("force_init", "Force Init"), new ThemeResource("icons/refresh.gif"));
-        SELECT_ALL_MODULES_ACTION = new Action(trans("select_all", "Select All Modules"));
-        DESELECT_ALL_MODULES_ACTION = new Action(trans("deselect_all", "Deselect All Modules"));
+        ADD_MODULE_ACTION = new Action(TranslationUtils.trans("add_module", "Add New Module"), new ThemeResource("icons/module_add.png"));
+        ADD_SUBMODULE_ACTION = new Action(TranslationUtils.trans("add_submodule", "Add Submodule"), new ThemeResource("icons/module_add.png"));
+        REMOVE_MODULE_ACTION = new Action(TranslationUtils.trans("remove_module", "Remove Module"), new ThemeResource("icons/module_delete.png"));
+        REMOVE_SUBMODULE_ACTION = new Action(TranslationUtils.trans("remove_submodule", "Remove Submodule"), new ThemeResource("icons/module_delete.png"));
+        START_MODULE_ACTION = new Action(TranslationUtils.trans("start", "Start"), new ThemeResource("icons/enable.png"));
+        STOP_MODULE_ACTION = new Action(TranslationUtils.trans("stop", "Stop"), new ThemeResource("icons/disable.gif"));
+        RESTART_MODULE_ACTION = new Action(TranslationUtils.trans("restart", "Restart"), new ThemeResource("icons/refresh.gif"));
+        REINIT_MODULE_ACTION = new Action(TranslationUtils.trans("force_init", "Force Init"), new ThemeResource("icons/refresh.gif"));
+        SELECT_ALL_MODULES_ACTION = new Action(TranslationUtils.trans("select_all", "Select All Modules"));
+        DESELECT_ALL_MODULES_ACTION = new Action(TranslationUtils.trans("deselect_all", "Deselect All Modules"));
 
         logInitRequest(request);
 
@@ -398,7 +399,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
             {
                 String version = ModuleUtils.getModuleInfo(getClass()).getModuleVersion();
                 String buildNumber = ModuleUtils.getBuildNumber(getClass());
-                Window popup = new Window("<b>" + trans("about", "About OpenSensorHub") + "</b>");
+                Window popup = new Window("<b>" + TranslationUtils.trans("about", "About OpenSensorHub") + "</b>");
                 popup.setIcon(LOGO_ICON);
                 popup.setCaptionAsHtml(true);
                 popup.setModal(true);
@@ -408,15 +409,15 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                 VerticalLayout content = new VerticalLayout();
                 content.setMargin(true);
                 content.setSpacing(true);
-                content.addComponent(new Label(trans("about_desc", "A software platform for building smart sensor networks and the Internet of Things")));
-                content.addComponent(new Label(trans("about_license", "Licenced under <a href=\"https://www.mozilla.org/en-US/MPL/2.0\" target=\"_blank\">Mozilla Public License v2.0</a>"), ContentMode.HTML));
-                content.addComponent(new Label("<b>" + trans("version", "Version") + ":</b> " + (version != null ? version: "?"), ContentMode.HTML));
-                content.addComponent(new Label("<b>" + trans("build_number", "Build Number") + ":</b> " + (buildNumber != null ? buildNumber: "?"), ContentMode.HTML));
+                content.addComponent(new Label(TranslationUtils.trans("about_desc", "A software platform for building smart sensor networks and the Internet of Things")));
+                content.addComponent(new Label(TranslationUtils.trans("about_license", "Licenced under <a href=\"https://www.mozilla.org/en-US/MPL/2.0\" target=\"_blank\">Mozilla Public License v2.0</a>"), ContentMode.HTML));
+                content.addComponent(new Label("<b>" + TranslationUtils.trans("version", "Version") + ":</b> " + (version != null ? version: "?"), ContentMode.HTML));
+                content.addComponent(new Label("<b>" + TranslationUtils.trans("build_number", "Build Number") + ":</b> " + (buildNumber != null ? buildNumber: "?"), ContentMode.HTML));
 
                 // If the config has a friendly node name
                 if (adminModule.getConfiguration().deploymentName != null && !adminModule.getConfiguration().deploymentName.isEmpty()) {
 
-                    content.addComponent(new Label("<b>" + trans("deployment_name", "Deployment Name") + ":</b> " + adminModule.getConfiguration().deploymentName, ContentMode.HTML));
+                    content.addComponent(new Label("<b>" + TranslationUtils.trans("deployment_name", "Deployment Name") + ":</b> " + adminModule.getConfiguration().deploymentName, ContentMode.HTML));
                 }
                 popup.setContent(content);
                 addWindow(popup);
@@ -464,8 +465,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         toolbar.setComponentAlignment(languageSelect, Alignment.MIDDLE_RIGHT);
 
         // shutdown button
-        Button shutdownButton = new Button(trans("shutdown", "Shutdown"));
-        shutdownButton.setDescription(trans("shutdown_tooltip", "Shutdown SensorHub"));
+        Button shutdownButton = new Button(TranslationUtils.trans("shutdown", "Shutdown"));
+        shutdownButton.setDescription(TranslationUtils.trans("shutdown_tooltip", "Shutdown SensorHub"));
 
         //shutdownButton.setIcon(DEL_ICON);
         shutdownButton.setIcon(FontAwesome.POWER_OFF);
@@ -483,7 +484,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                     return;
                 }
 
-                final ConfirmDialog popup = new ConfirmDialog(trans("shutdown_confirm", "Are you sure you want to shutdown the sensor hub?"));
+                final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.trans("shutdown_confirm", "Are you sure you want to shutdown the sensor hub?"));
                 popup.addCloseListener(new CloseListener() {
                     @Override
                     public void windowClose(CloseEvent e)
@@ -524,8 +525,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         toolbar.addComponent(shutdownButton);
 
         // logout button
-        Button logoutButton = new Button(trans("logout", "Logout"));
-        logoutButton.setDescription(trans("logout_tooltip", "Logout from OSH node"));
+        Button logoutButton = new Button(TranslationUtils.trans("logout", "Logout"));
+        logoutButton.setDescription(TranslationUtils.trans("logout_tooltip", "Logout from OSH node"));
         logoutButton.setIcon(FontAwesome.SIGN_OUT);
         logoutButton.addStyleName(STYLE_SMALL);
         logoutButton.addStyleName(STYLE_BORDERLESS);
@@ -534,7 +535,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
             @Override
             public void buttonClick(ClickEvent event)
             {
-                final ConfirmDialog popup = new ConfirmDialog(trans("logout_confirm", "Are you sure you want to logout?"));
+                final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.trans("logout_confirm", "Are you sure you want to logout?"));
                 popup.addCloseListener(new CloseListener() {
                     @Override
                     public void windowClose(CloseEvent e)
@@ -557,8 +558,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         toolbar.addComponent(logoutButton);
 
         // apply changes button
-        Button saveButton = new Button(trans("save", "Save"));
-        saveButton.setDescription(trans("save_tooltip", "Save SensorHub Configuration"));
+        Button saveButton = new Button(TranslationUtils.trans("save", "Save"));
+        saveButton.setDescription(TranslationUtils.trans("save_tooltip", "Save SensorHub Configuration"));
         saveButton.setIcon(APPLY_ICON);
         saveButton.addStyleName(STYLE_SMALL);
         saveButton.addStyleName(STYLE_BORDERLESS);
@@ -574,7 +575,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                     return;
                 }
 
-                final ConfirmDialog popup = new ConfirmDialog(trans("save_confirm", "Are you sure you want to save the configuration (and override the previous one)?"));
+                final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.trans("save_confirm", "Are you sure you want to save the configuration (and override the previous one)?"));
                 popup.addCloseListener(new CloseListener() {
                     @Override
                     public void windowClose(CloseEvent e)
@@ -586,7 +587,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             try
                             {
                                 moduleRegistry.saveModulesConfiguration();
-                                DisplayUtils.showOperationSuccessful(trans("save_success", "SensorHub Configuration Saved"));
+                                DisplayUtils.showOperationSuccessful(TranslationUtils.trans("save_success", "SensorHub Configuration Saved"));
                             }
                             catch (Exception ex)
                             {
@@ -914,8 +915,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1030,8 +1031,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1076,8 +1077,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("start_confirm", "Are you sure you want to start {0}?", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("start_confirm", "Are you sure you want to start {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1127,8 +1128,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("stop_confirm", "Are you sure you want to stop {0}?", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("stop_confirm", "Are you sure you want to stop {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1168,8 +1169,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("restart_confirm", "Are you sure you want to restart {0}?", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("restart_confirm", "Are you sure you want to restart {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1209,8 +1210,8 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                             return;
                         }
 
-                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog(transArgs("reinit_confirm", "Are you sure you want to force re-init {0}?", targetText));
+                        var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + TranslationUtils.trans("modules_text", " modules");
+                        final ConfirmDialog popup = new ConfirmDialog(TranslationUtils.transArgs("reinit_confirm", "Are you sure you want to force re-init {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1324,7 +1325,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
 
         // get panel for this config object
         IModuleAdminPanel<IModule<?>> panel = adminModule.generatePanel(module);
-        Label moduleVersion = new Label(trans("version_bold", "<b>Version: </b>") + getModuleVersion(module), ContentMode.HTML);
+        Label moduleVersion = new Label(TranslationUtils.trans("version_bold", "<b>Version: </b>") + getModuleVersion(module), ContentMode.HTML);
         panel.addComponent(moduleVersion);
         panel.build(beanItem, module);
 

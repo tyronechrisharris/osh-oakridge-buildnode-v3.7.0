@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import org.sensorhub.api.database.IObsSystemDatabase;
 import org.sensorhub.ui.ValueEntryPopup.ValueCallback;
 import org.sensorhub.ui.api.UIConstants;
@@ -73,7 +75,7 @@ public class SystemSelectionPopup extends Window
         layout.setComponentAlignment(buttons, Alignment.MIDDLE_CENTER);
         
         // add OK button
-        Button okButton = new Button("OK");
+        Button okButton = new Button(TranslationUtils.trans("ok", "OK"));
         okButton.addStyleName(UIConstants.STYLE_SMALL);
         okButton.addClickListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;

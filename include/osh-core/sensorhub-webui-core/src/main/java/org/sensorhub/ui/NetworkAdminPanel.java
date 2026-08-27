@@ -14,6 +14,8 @@ Copyright (C) 2012-2015 Sensia Software LLC. All Rights Reserved.
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import org.sensorhub.api.comm.ICommNetwork;
@@ -77,7 +79,7 @@ public class NetworkAdminPanel extends DefaultModulePanel<ICommNetwork<?>> imple
         protected void addAvailableNetworks()
         {
             // section title
-            Label sectionLabel = new Label("Available Networks");
+            Label sectionLabel = new Label(TranslationUtils.trans("available_networks", "Available Networks"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             addComponent(sectionLabel);
@@ -112,13 +114,13 @@ public class NetworkAdminPanel extends DefaultModulePanel<ICommNetwork<?>> imple
         protected void addScannedDevicesTable()
         {
             // section title
-            Label sectionLabel = new Label("Detected Devices");
+            Label sectionLabel = new Label(TranslationUtils.trans("detected_devices", "Detected Devices"));
             sectionLabel.addStyleName(STYLE_H3);
             sectionLabel.addStyleName(STYLE_COLORED);
             addComponent(sectionLabel);
             
             // scan button
-            scanButton = new Button("Start Scan");
+            scanButton = new Button(TranslationUtils.trans("start_scan", "Start Scan"));
             scanButton.setIcon(REFRESH_ICON);
             scanButton.addStyleName("scan-button");
             scanButton.setEnabled(module.isStarted());

@@ -14,6 +14,8 @@
 
 package org.sensorhub.ui;
 
+import org.sensorhub.ui.TranslationUtils;
+
 import org.sensorhub.api.ISensorHub;
 import org.sensorhub.api.common.SensorHubException;
 import org.sensorhub.api.event.IEventListener;
@@ -75,7 +77,7 @@ public class DefaultModulePanel<ModuleType extends IModule<? extends ModuleConfi
         title.addStyleName(STYLE_H2);
         header.addComponent(title);
         addComponent(header);
-        Label hr = new Label("<hr/>", ContentMode.HTML);
+        Label hr = new Label(TranslationUtils.trans("_hr__", "<hr/>"), ContentMode.HTML);
         hr.setWidth(100.0f, Unit.PERCENTAGE);
         addComponent(hr);
 
@@ -87,7 +89,7 @@ public class DefaultModulePanel<ModuleType extends IModule<? extends ModuleConfi
         if (!module.getLocalID().startsWith("$$"))
         {
             // apply changes button
-            Button applyButton = new Button("Apply Changes");
+            Button applyButton = new Button(TranslationUtils.trans("apply_changes", "Apply Changes"));
             applyButton.setIcon(APPLY_ICON);
             applyButton.addStyleName(STYLE_SMALL);
             applyButton.addStyleName("apply-button");
