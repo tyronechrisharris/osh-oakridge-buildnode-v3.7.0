@@ -39,6 +39,9 @@ import org.eclipse.jetty.security.authentication.LoginAuthenticator;
 import org.eclipse.jetty.server.Authentication;
 import org.eclipse.jetty.server.UserIdentity;
 import org.sensorhub.api.security.ISecurityManager;
+import org.sensorhub.api.ISensorHub;
+import org.sensorhub.api.module.IModule;
+import org.sensorhub.impl.module.ModuleRegistry;
 import org.slf4j.Logger;
 
 /**
@@ -56,6 +59,7 @@ public class BasicSessionAuthenticator extends LoginAuthenticator {
 
     private final Logger log;
     private final ISecurityManager securityManager;
+    private final ISensorHub hub;
     private final String cookieName;
     private final long idleTimeoutMillis;
     private final long absoluteTimeoutMillis;
@@ -66,7 +70,7 @@ public class BasicSessionAuthenticator extends LoginAuthenticator {
     private final Map<String, SessionRecord> sessions = new ConcurrentHashMap<>();
     private volatile long nextPruneAt;
 
-    public BasicSessionAuthenticator(BasicSessionConfig config, ISecurityManager securityManager, Logger log) {
+    public BasicSessionAuthenticator(BasicSessionConfig config, ISecurityManager securityManager, ISensorHub hub, Logger log) {
         if (config.cookieName == null || !config.cookieName.matches("[!#$%&'*+.^_`|~0-9A-Za-z-]+"))
             throw new IllegalArgumentException("Invalid session cookie name");
         if (config.idleTimeoutSeconds <= 0 || config.absoluteTimeoutSeconds <= 0)
@@ -87,6 +91,7 @@ public class BasicSessionAuthenticator extends LoginAuthenticator {
                 + config.sameSite.substring(1).toLowerCase();
         this.defaultRedirectPath = config.defaultRedirectPath;
         this.securityManager = securityManager;
+        this.hub = hub;
         this.log = log;
     }
 
@@ -322,7 +327,22 @@ public class BasicSessionAuthenticator extends LoginAuthenticator {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
-        byte[] body = ("{\"username\":\"" + escapeJson(username) + "\"}")
+
+        String lang = "en";
+        if (hub != null && hub.getModuleRegistry() != null) {
+            for (IModule<?> m : hub.getModuleRegistry().getLoadedModules()) {
+                if (m.getClass().getName().equals("org.sensorhub.ui.AdminUIModule")) {
+                    try {
+                        Object config = m.getConfiguration();
+                        java.lang.reflect.Field f = config.getClass().getField("defaultLanguage");
+                        String val = (String) f.get(config);
+                        if (val != null) lang = val;
+                    } catch (Exception e) {}
+                }
+            }
+        }
+
+        byte[] body = ("{\"username\":\"" + escapeJson(username) + "\", \"defaultLanguage\":\"" + escapeJson(lang) + "\"}")
                 .getBytes(StandardCharsets.UTF_8);
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json; charset=UTF-8");

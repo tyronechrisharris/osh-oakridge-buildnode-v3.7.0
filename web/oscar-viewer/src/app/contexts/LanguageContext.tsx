@@ -31,6 +31,17 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     if (savedLanguage && translations[savedLanguage]) {
       setLanguageState(savedLanguage);
     }
+
+    // Attempt to read default language from session
+    fetch('/session')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.defaultLanguage && translations[data.defaultLanguage as Locale] && !savedLanguage) {
+            setLanguageState(data.defaultLanguage as Locale);
+            localStorage.setItem('language', data.defaultLanguage as Locale);
+        }
+      })
+      .catch(error => console.error("Could not fetch default language from session", error));
     setIsLoaded(true);
   }, []);
 

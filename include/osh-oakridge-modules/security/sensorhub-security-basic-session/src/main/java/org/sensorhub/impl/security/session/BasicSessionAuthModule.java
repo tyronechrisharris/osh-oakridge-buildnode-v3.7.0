@@ -31,6 +31,7 @@ public class BasicSessionAuthModule extends AbstractModule<BasicSessionConfig>
         authenticator = new BasicSessionAuthenticator(
                 config,
                 getParentHub().getSecurityManager(),
+                getParentHub(),
                 getLogger()
         );
 
