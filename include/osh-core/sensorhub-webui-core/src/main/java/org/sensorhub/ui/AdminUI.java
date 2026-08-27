@@ -96,12 +96,12 @@ import com.vaadin.v7.ui.Table;
 import com.vaadin.v7.ui.Table.CellStyleGenerator;
 import com.vaadin.v7.ui.Table.ColumnHeaderMode;
 import com.vaadin.v7.ui.TreeTable;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.v7.ui.ComboBox;
 import com.vaadin.v7.data.Property.ValueChangeListener;
 import com.vaadin.v7.data.Property.ValueChangeEvent;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Window.CloseListener;
@@ -125,10 +125,6 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
     private Action REINIT_MODULE_ACTION;
     private Action SELECT_ALL_MODULES_ACTION;
     private Action DESELECT_ALL_MODULES_ACTION;
-    private static final Resource LOGO_ICON = new ThemeResource("icons/osh_logo_small.png");
-    private static final String STYLE_LOGO = "logo";
-    private static final String PROP_STATE = "state";
-    private static final String PROP_MODULE_OBJECT = "module";
 
     private Locale currentLocale = Locale.ENGLISH;
 
@@ -140,6 +136,24 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
             return defaultText;
         }
     }
+
+    protected String transArgs(String key, String defaultText, Object... args) {
+        String template = trans(key, defaultText);
+        return java.text.MessageFormat.format(template, args);
+    }
+
+
+
+
+
+
+
+
+
+    private static final Resource LOGO_ICON = new ThemeResource("icons/osh_logo_small.png");
+    private static final String STYLE_LOGO = "logo";
+    private static final String PROP_STATE = "state";
+    private static final String PROP_MODULE_OBJECT = "module";
 
     transient Logger log;
     transient ISensorHub hub;
@@ -180,6 +194,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
             throw new IllegalStateException("Cannot get UI module configuration", e);
         }
 
+        // log request
         ADD_MODULE_ACTION = new Action(trans("add_module", "Add New Module"), new ThemeResource("icons/module_add.png"));
         ADD_SUBMODULE_ACTION = new Action(trans("add_submodule", "Add Submodule"), new ThemeResource("icons/module_add.png"));
         REMOVE_MODULE_ACTION = new Action(trans("remove_module", "Remove Module"), new ThemeResource("icons/module_delete.png"));
@@ -191,7 +206,6 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         SELECT_ALL_MODULES_ACTION = new Action(trans("select_all", "Select All Modules"));
         DESELECT_ALL_MODULES_ACTION = new Action(trans("deselect_all", "Deselect All Modules"));
 
-        // log request
         logInitRequest(request);
 
         // security check
@@ -452,6 +466,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
         // shutdown button
         Button shutdownButton = new Button(trans("shutdown", "Shutdown"));
         shutdownButton.setDescription(trans("shutdown_tooltip", "Shutdown SensorHub"));
+
         //shutdownButton.setIcon(DEL_ICON);
         shutdownButton.setIcon(FontAwesome.POWER_OFF);
         shutdownButton.addStyleName(STYLE_SMALL);
@@ -900,7 +915,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to remove " + targetText + "?</br>All settings will be lost.");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1016,7 +1031,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to remove " + targetText + "?</br>All settings will be lost.");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("remove_confirm", "Are you sure you want to remove {0}?</br>All settings will be lost.", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1062,7 +1077,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to start " + targetText + "?");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("start_confirm", "Are you sure you want to start {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1113,7 +1128,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to stop " + targetText + "?");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("stop_confirm", "Are you sure you want to stop {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1154,7 +1169,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to restart " + targetText + "?");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("restart_confirm", "Are you sure you want to restart {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1195,7 +1210,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
                         }
 
                         var targetText = (selectedModules.size() == 1) ? selectedModules.get(0).getName() : selectedModules.size() + " modules";
-                        final ConfirmDialog popup = new ConfirmDialog("Are you sure you want to force re-init " + targetText + "?");
+                        final ConfirmDialog popup = new ConfirmDialog(transArgs("reinit_confirm", "Are you sure you want to force re-init {0}?", targetText));
                         popup.addCloseListener(new CloseListener() {
                             @Override
                             public void windowClose(CloseEvent e)
@@ -1309,7 +1324,7 @@ public class AdminUI extends com.vaadin.ui.UI implements UIConstants
 
         // get panel for this config object
         IModuleAdminPanel<IModule<?>> panel = adminModule.generatePanel(module);
-        Label moduleVersion = new Label("<b>Version: </b>" + getModuleVersion(module), ContentMode.HTML);
+        Label moduleVersion = new Label(trans("version_bold", "<b>Version: </b>") + getModuleVersion(module), ContentMode.HTML);
         panel.addComponent(moduleVersion);
         panel.build(beanItem, module);
 
