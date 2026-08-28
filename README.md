@@ -4,6 +4,19 @@ OSCAR combines OpenSensorHub modules, the OSCAR viewer, PostgreSQL/PostGIS, and 
 
 The configured HTTPS port and a port 80 HTTPS redirect are published. PostgreSQL and the OSCAR application port remain on private Compose networks. Java 21.0.10 is included in the OSCAR container image and is not required on deployment hosts.
 
+## Local Development
+
+For local development, an initialization script provisions trusted SSL certificates using `mkcert` to avoid "Not Secure" warnings in the browser.
+
+1. From the repository root, run the initialization script to install `mkcert` and generate the certificates:
+   ```sh
+   ./init-ssl.sh
+   ```
+2. Start the local Docker Compose environment with the local override:
+   ```sh
+   docker compose -f dist/release/compose.yaml -f docker-compose.local.yml up
+   ```
+
 ## Installation
 
 See the release [Quick Start](dist/release/QUICKSTART.md) for the shortest supported installation path. The [Administrator Guide](dist/release/DEPLOYMENT.md) covers certificates, offline Windows installation, lifecycle commands, security verification, and upgrades.
