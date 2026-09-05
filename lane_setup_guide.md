@@ -1,54 +1,52 @@
 # Setting Up a Radiation Portal Monitor (RPM) Lane in OSCAR
 
-This guide will walk you through the process of setting up a new Radiation Portal Monitor Lane using the Lane System driver in the OSCAR Admin interface, from initial configuration to viewing the live lane in the OSCAR Viewer.
+This guide will walk you through the process of setting up a new Radiation Portal Monitor Lane using the Lane System driver in the OSCAR Admin interface.
 
 ## Step 1: Add a New Lane System Driver
 1. Log into the OSCAR Admin UI.
-2. Navigate to the **Sensor Management** or **Drivers** section.
-3. Click on the option to **Add a New Driver** or **Add Sensor**.
-4. From the list of available driver types, select the **Lane System Driver** (or similar designation for the aggregated lane system).
+2. Select **Sensors** from the left-hand accordion control.
+3. Right-click inside the accordion control to open the context-sensitive menu.
+4. Click **Add New Module** and select **Lane System** from the list of available modules.
 
-## Step 2: Configure the Lane Details
-1. Give your new lane a descriptive **Name** (e.g., "Main Entrance Lane 1").
-2. Provide a **Description** outlining its location or purpose.
+## Step 2: Configure the Lane Details (General Tab)
+In the configuration form that appears, fill out the General settings:
+1. **Module Name:** Give your lane a unique name (must be less than 12 characters).
+2. **UniqueID:** Provide the platform's serial number or a unique identifier. This will be used for all submodules and must be unique.
+3. **Auto Start:** Check this box to ensure the module starts automatically when the OSH node is launched.
+4. **Delete Data on Lane Removal:** Check this box if you want the system's data to be removed from the database if the lane is deleted.
+5. **Fixed Location:** Provide the **Latitude** and **Longitude** for the lane's location.
 
 ## Step 3: Select the Radiation Portal Monitor (RPM) Type
-Within the Lane System configuration panel, you must specify the primary radiation monitor hardware being used for this lane:
-1. Locate the **RPM Type** dropdown or selection menu.
-2. Select the specific brand/model of your RPM. Common options include:
-   - **Rapiscan**
-   - **Aspect**
-   - **RS350**
-3. Fill in any required connection details for the chosen RPM (such as IP address or COM port) as prompted by the configuration form.
+Scroll to the **Lane Options Config** section to set up your RPM:
+1. Under **Initial RPM Config**, click **Add**.
+2. Select your RPM type from the available options (e.g., **Rapiscan**, **Aspect**, or **RS350**).
+3. Configure the specific RPM settings:
+   - For **Rapiscan** and **Aspect**: Provide the **Remote Host** (IP address) and **Remote Port** of the device.
+   - For **Aspect** (Additional): Provide the **Address Range**.
 
 ## Step 4: Add Cameras
-Next, you will link cameras to the lane to provide visual context for alarm events.
-1. Locate the **Cameras** section within the Lane System configuration.
-2. Click **Add Camera**.
-3. Select the camera type:
-   - **Sony:** Select this if using a supported Sony camera model and provide the IP/credentials.
-   - **Axis:** Select this if using a supported Axis camera model and provide the IP/credentials.
-   - **RTSP / Custom URL:** Select this if you are connecting to a generic IP camera stream. You will need to enter the exact RTSP URL (e.g., `rtsp://username:password@camera-ip:554/stream`).
-4. Repeat this process for each camera associated with the lane (e.g., front view, rear view, overview).
+Still under the **Lane Options Config** section, you will link cameras:
+1. Under **Initial Camera Config**, click **Add**.
+2. Select the camera type: **Sony**, **Axis**, or **Custom** (for RTSP URLs).
+3. Configure the camera settings:
+   - **Remote Host:** Enter your camera's IP and port in the format `ip.ip.ip.ip:port` (e.g., `192.168.8.77:8554`).
+   - **Username:** Enter your camera's username (if applicable).
+   - **Password:** Enter your camera's password (if applicable).
+   - **Axis (Specific):** Select the **Stream Codec**.
+   - **Custom (Specific):** In the **Stream Path** field, enter everything that comes after the IP and port in your stream URL (e.g., `/lane04_cam`).
+4. Repeat this process for any additional cameras you wish to add to the lane.
 
 ## Step 5: Apply Changes and Initialize
-1. Once you have configured the lane details, RPM type, and all cameras, click the **Apply** or **Apply Changes** button. This saves the configuration to the database.
-2. Next, click the **Initialize** button. This instructs the OSCAR system to attempt connections to the RPM hardware and the configured cameras based on the settings you just provided.
+1. Once all general details, RPM configurations, and camera configurations are filled out, click the **Apply** button at the bottom of the form to save the configuration to the database.
+2. Next, right click the new module you created under the **Sensors** list.
+3. Click the **Initialize** option. The system will attempt to establish connections to the RPM hardware and the configured cameras based on your settings.
 
-## Step 6: Confirm Sensor Initialization
-1. After clicking Initialize, watch the status indicators or log output in the Admin UI.
-2. Ensure that the main Lane driver, the RPM component, and every camera component reports a status of **Initialized** or **Connected**.
-3. *Troubleshooting:* If any component fails to initialize (e.g., an RTSP camera shows an error), verify the IP addresses, passwords, and network connectivity before proceeding.
+## Step 6: Confirm Sensor Initialization and Start
+1. Watch the status indicator next to the Lane System driver in the left-hand menu. It should turn yellow, indicating it is **Initialized**.
+2. If it initialized successfully, right-click the module again and click **Start**.
+3. The indicator should turn green, indicating the Lane System is now actively pulling data and running.
 
-## Step 7: Start the Driver and Save
-1. Once all components are successfully initialized, click the **Start** button. This tells the driver to begin actively pulling data (radiation readings and video streams) from the hardware.
-2. The status should change to **Running** or **Active**.
-3. Finally, ensure you click **Save** (if separate from Apply) to persist this running configuration so it starts automatically if the OSCAR server reboots.
-
-## Step 8: View the System in OSCAR Viewer
-1. Open a new browser tab and navigate to the **OSCAR Viewer** dashboard.
-2. In the Viewer interface, navigate to the **Lane View** or locate your newly created lane on the Dashboard.
-3. You should now see:
-   - Live data charts (Gamma/Neutron readings) if the RPM is transmitting data.
-   - Live video feeds from the cameras you configured.
-   - The lane's status reflecting "Online" and ready to process occupancies or alarms.
+## Step 7: View the System in OSCAR Viewer
+1. Open a new browser tab and navigate to the **OSCAR Viewer** application.
+2. From the main dashboard, you should see your newly created lane listed.
+3. Click on the lane or navigate to the Lane View to observe the live data charts for radiation readings and the live video feeds from the cameras you configured.
